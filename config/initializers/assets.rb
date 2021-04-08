@@ -19,7 +19,8 @@ Rails.application.config.assets.precompile += %w( user_devise.js user_devise.css
 Rails.application.config.assets.precompile += %w( site.js site.css )
 # Para lib/assets
 Rails.application.config.assets.precompile += %w( sb-admin-2.js sb-admin-2.css )
-Rails.application.config.assets.precompile += %w( all.css )
+Rails.application.config.assets.precompile += %w( all.scss )
+Rails.application.config.assets.precompile += %w( fa-solid-900.ttf )
 Rails.application.config.assets.precompile += %w( custom.css custom.js )
 Rails.application.config.assets.precompile += %w( defaultAvatar.png profile.jpg )
 # Para vendor/assets

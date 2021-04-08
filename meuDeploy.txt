@@ -15,3 +15,12 @@ rvm install 2.4.10
 gem install bundler
 sudo apt-get update
 sudo apt-get install nginx
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'abc123';
+FLUSH PRIVILEGES;
+cd
+mkdir .ssh
+chmod 700 .ssh
+sudo mkdir /var/www
+sudo chown www-data. /var/www
+sudo chmod g+w /var/www
+git rm config/database.yml

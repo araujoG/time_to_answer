@@ -21,6 +21,9 @@
 /storage/*
 !/storage/.keep
 
+config/database.yml
+/public/templates
+
 /node_modules
 /yarn-error.log
 

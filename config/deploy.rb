@@ -10,3 +10,12 @@ set :format, :airbrussh
 set :log_level, :debug
 append :linked_files, "config/database.yml", "config/master.key"
 append :linked_dirs, "storage", "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
+
+after "deploy:finished", "deploy:restart"
+
+namespace :deploy do
+	task :restart do
+		invoke "unicorn:stop"
+		invoke "unicorn:start"
+	end
+end

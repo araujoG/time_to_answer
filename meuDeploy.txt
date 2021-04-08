@@ -24,3 +24,79 @@ sudo mkdir /var/www
 sudo chown www-data. /var/www
 sudo chmod g+w /var/www
 git rm config/database.yml
+
+user www-data www-data;
+worker_processes 4;
+pid /var/run/nginx.pid;
+
+events {
+	worker_connections 1024;
+}
+
+http {
+	include /etc/nginx/mime.types;
+	default_type application/octet-stream;
+	log_format main '$remote_addr - $remote_user [$time_local] '
+					'"$request" $status $body_bytes_sent "$http_referer" '
+					'"$http_user_agent" "$http_x_forwarded_for"';
+	sendfile on;
+	keepalive_requests 10;
+	keepalive_timeout 60;
+	tcp_nodelay off;
+	tcp_nopush on;
+
+	add_header X-Content-Type-Options nosniff;
+	add_header X-Frame-Options DENY;
+
+	server_tokens off;
+	client_header_timeout 60;
+	client_body_timeout 60;
+	ignore_invalid_headers on;
+	send_timeout 60;
+	server_name_in_redirect off;
+
+	gzip on;
+	gzip_http_version 1.0;
+	gzip_comp_level 6;
+	gzip_proxied any;
+	gzip_types text/plain text/css application/x-javascript text/xml application/xml application/xml+rss
+	text/javascript;
+	gzip_disable "MSIE [1-6] \.";
+
+	include /etc/nginx/sites-enabled/*;
+}
+
+upstream timetoanswer {
+	server unix:/tmp/timetoanswer.sock fail_timeout=0;
+}
+server {
+	listen 80;
+	server_name timetoanswer.com.br;
+	root /var/www/timetoanswer/current/public;
+	index index.html index.htm;
+	client_max_body_size 10M;
+	location / {
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		proxy_set_header Host $http_host;
+		proxy_set_header X-FORWARDED_PROTO $scheme;
+		proxy_redirect off;
+		if ($request_uri ~* "\.(ico|css|js|gif|jpe?g|png)\?[0-9]+$") {access_log off;
+			add_header Cache-Control public;
+			expires max;
+			break;
+		}
+		if (!-f $request_filename) {
+			proxy_pass http://timetoanswer;
+			break;
+		}
+	}
+	error_page 500 502 503 504 /500.html;
+	location = /500.html {
+	root /var/www/timetoanswer/current/public;
+	}
+	error_page 404 /404.html;
+	location = /404.html {
+	root /var/www/timetoanswer/current/public;
+	}
+}

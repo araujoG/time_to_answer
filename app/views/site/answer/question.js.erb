@@ -1,0 +1,12 @@
+var classA = ""
+$('*[data-question="<%= @answer.question.id %>"]').children().each(function (){
+	$(this).removeClass("text-success")
+	$(this).removeClass("text-danger")
+});
+<% if @answer.correct %>
+$("#<%=@answer.id%>").addClass("text-success");
+$.growl.notice({ title: "Parabéns", message: 'Você acertou \\0/' });
+<%else%>
+$("#<%=@answer.id%>").addClass("text-danger");
+$.growl.error({ title: "Poxa", message: "Essa não é a resposta correta..." });
+<%end%>

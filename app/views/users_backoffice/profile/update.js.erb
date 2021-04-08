@@ -1,0 +1,5 @@
+$("#avatarModal").modal("hide");
+$("[name='profileImg']").each(function() {
+	$(this).attr("src","<%= url_for(@user.user_profile.avatar) %>")
+});
+$.growl.notice({ title: "Sucesso", message: "Avatar atualizado!!!"});

@@ -1,0 +1,35 @@
+<% if @question.errors.any? %>
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true" aria-label="Close">X</button>
+	<% @question.errors.full_messages.each do |message| %>
+		<p class="mb-1"><%= message %></p>
+	<% end %>
+</div>
+<% end %>
+<div class="card o-hidden border-0 shadow-lg my-3 col-md-10 col-lg-8 col-xl-6 mx-auto">
+    <div class="card-body p-0">
+		<div class="p-5">
+			<div class="text-center">
+				<h2 class="h2 mb-4"><%= "#{action_message}" %></h2>
+			</div>
+			
+			<%= form_with(model: [ :admins_backoffice, @question], class: "user", local: true) do |form| %>
+				<div class="form-group">
+					<%= form.text_area :description, class:"form-control form-control-user",placeholder: true %>
+				</div>
+				<div class="form-group">
+					<%= form.collection_select(:subject_id, @subjects, :id, :description,{}, {class:"form-control mx-auto"})%>
+				</div>
+				<div id = "answers" class="form-group">
+					<%= form.fields_for :answers do |answer| %>
+						<%= render partial: "answer_fields", locals: {f: answer} %>
+					<% end %>
+					<%= link_to_add_association '[Adicionar Resposta]', form, :answers %>
+				</div>
+				<button type="submit" class="btn btn-primary btn-user btn-block col-10 col-lg-8 col-xl-5 mx-auto">
+					Salvar Alterações
+				</button>
+			<% end %>
+		</div>
+	</div>
+</div>

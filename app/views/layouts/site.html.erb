@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+		<title>TimeToAnswer</title>
+		<%= csrf_meta_tags %>
+		<%= csp_meta_tag %>
+		<%= stylesheet_link_tag    'application' %>
+		<%= stylesheet_link_tag    'site' %>
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light px-4 mb-3">
+			<%= link_to "Time To Answer", root_path, class: "navbar-brand" %>
+			<%= form_with(url: site_search_path, local: true, method: :get, class:"form-inline my-2 my-lg-0") do |form| %>
+				<%= form.text_field :term, class:"form-control mr-sm-2", type:"search", placeholder:"Pesquisar pergunta" %>
+				<button class="btn btn-outline-info my-2 my-sm-0" type="submit">Buscar</button>
+			<% end %>
+			
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav ml-auto">
+					<% unless user_signed_in? %>
+						<li class="nav-item">
+							<%= link_to "Entrar", new_user_session_path, class: "nav-link" %>
+						</li>
+						<li class="nav-item">
+							<%= link_to "Cadastrar-se", new_user_registration_path, class: "nav-link" %>
+						</li>
+					<% else %>
+						<div class="dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown">
+								<%= current_user.email %>
+							</a>
+							<div class="dropdown-menu">
+								<%= link_to users_backoffice_welcome_index_path, class: "dropdown-item" do %>
+									<i class="fas fa-user mr-2 text-gray-400"></i> Dados de Perfil
+								<% end %>
+								<hr class="my-1">
+								<%= link_to destroy_user_session_path, method: :delete, class: "dropdown-item" do %>
+									<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Sair
+								<% end %>
+							</div>
+						</div>
+					<% end %>
+				</ul>
+			</div>
+		</nav>
+		<div class="container">
+			<!-- Main component for a primary marketing message or call to action -->
+			<h2><%= page_title %></h2>
+			<div class="px-2">
+				<%= yield %>
+			</div>
+		</div>
+		<!-- /container -->
+		<%= javascript_include_tag 'application' %>
+		<%= javascript_include_tag 'site' %>
+		<!--<script src="https://kit.fontawesome.com/650524cba9.js" crossorigin="anonymous"></script>-->
+		<% if notice %>
+			<script type="text/javascript">
+				// $.growl({ title: "Growl", message: "The kitten is awake!"});
+				// $.growl.error({ message: "The kitten is attacking!" });
+				$.growl.notice({ title: "Sucesso", message: '<%= notice %>' });
+				// $.growl.warning({ message: "The kitten is ugly!" });
+			</script>
+		<% end %>
+	</body>
+</html>

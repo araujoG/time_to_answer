@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<!-- Meta, title, CSS, favicons, etc. -->
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<title>TimeToAnswer</title>
+		
+		<%= csrf_meta_tags %>
+		<%= csp_meta_tag %>
+		<%= stylesheet_link_tag    'application' %>
+		<%= stylesheet_link_tag    'user_devise' %>
+
+	</head>
+	<body class="login">
+		<%= yield %>
+		
+		<%= javascript_include_tag 'application' %>
+		<%= javascript_include_tag 'user_devise' %>
+		<!--<script src="https://kit.fontawesome.com/650524cba9.js" crossorigin="anonymous"></script>-->
+		
+		<% if flash %>
+			<% flash.each do |key, value| %>
+				<script type="text/javascript">
+					// $.growl({ title: "Growl", message: "The kitten is awake!"});
+					// $.growl.error({ message: "The kitten is attacking!" });
+					$.growl.warning({ title: "Aviso", message: "<%= value %>" });
+					// $.growl.notice({ title: "Sucesso", message: 'eRROOOOOO' });
+				</script>
+			<% end %>
+		<% end %>
+
+		<% unless resource.errors.empty? %>
+			<% resource.errors.full_messages.each do |msg| %>
+				<script type="text/javascript">
+					// $.growl({ title: "Growl", message: "The kitten is awake!"});
+					// $.growl.error({ message: "The kitten is attacking!" });
+					$.growl.error({ title: "Erro", message: "<%= msg %>" });
+					// $.growl.notice({ title: "Sucesso", message: 'eRROOOOOO' });
+				</script>
+			<% end %>
+		<% end %>
+	</body>
+</html>

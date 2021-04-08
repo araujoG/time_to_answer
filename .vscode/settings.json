@@ -1,0 +1,26 @@
+{
+    "vscode-erb-beautify.tab": true,
+    "ruby.useBundler": true, //run non-lint commands with bundle exec
+    "ruby.useLanguageServer": true, // use the internal language server (see below)
+    "ruby.lint": {
+        "rubocop": {
+            "useBundler": true // enable rubocop via bundler
+        },
+    },
+    "ruby.format": "rubocop",
+    "ruby.intellisense": "rubyLocate",
+    "ruby.languageServer": {
+        "logLevel": "info"
+    },
+    "solargraph.completion": true, // use rubocop for formatting
+    "solargraph.autoformat": true,
+    "solargraph.diagnostics": false,
+    "solargraph.formatting": true,
+    "solargraph.definitions": true,
+    "solargraph.hover": true,
+    "ruby.rubocop.useBundler": true,
+    "ruby.rubocop.configFilePath": ".rubocop.yml",
+    "editor.detectIndentation": false,
+	"editor.insertSpaces": false,
+	"git.ignoreLimitWarning": true
+}

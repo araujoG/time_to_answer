@@ -1,0 +1,6 @@
+'pt-BR':
+  messages:
+    listOf: Lista de %{model}
+    new: Cadastro de %{model}
+    edit: Edição de %{model}
+    confirm: Realmente deseja excluir '%{item}'?

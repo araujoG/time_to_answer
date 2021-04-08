@@ -1,0 +1,24 @@
+<h2>Change your password</h2>
+<div>
+	<a class="hiddenanchor" id="signin"></a>
+	<div class="login_wrapper">
+		<div class="animate form login_form">
+			<section class="login_content">
+				<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+					<%= f.hidden_field :reset_password_token %>
+					<h1>Altere sua senha</h1>
+					<div>
+						<%= f.password_field :password, placeholder: true, autocomplete: "current-password", class:"form-control" %>
+					</div>
+					<div>
+						<%= f.password_field :password_confirmation, placeholder: true, autocomplete: "current-password", class:"form-control" %>
+					</div>
+					<div>
+						<%= f.submit "Alterar", class:"btn btn-primary submit" %>
+					</div>
+					<%= render "users/shared/links" %>
+				<% end %>
+			</section>
+		</div>
+	</div>
+</div>

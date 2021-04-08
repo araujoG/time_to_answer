@@ -1,0 +1,30 @@
+<h1>Seja Bem Vindo!</h1>
+<% unless @user_statistic.blank? %>
+	<div class="animated flipInY col-lg-3 col-md-3 col-sm-6  ">
+		<div class="tile-stats">
+			<div class="icon"><i class="fa fa-comments-o"></i>
+			</div>
+			<div class="count"><%= @user_statistic.total_questions %></div>
+			<h3>Total</h3>
+			<p>Quantidade total de questões respondidas.</p>
+		</div>
+	</div>
+	<div class="animated flipInY col-lg-3 col-md-3 col-sm-6  ">
+		<div class="tile-stats">
+			<div class="icon"><i class="fas fa-check-double"></i>
+			</div>
+			<div class="count"><%= @user_statistic.right_questions %></div>
+			<h3>Acertos</h3>
+			<p>Quantidade respondidas corretamente.</p>
+		</div>
+	</div>
+	<div class="animated flipInY col-lg-3 col-md-3 col-sm-6  ">
+		<div class="tile-stats">
+			<div class="icon"><i class="fas fa-times"></i>
+			</div>
+			<div class="count"><%= @user_statistic.wrong_questions %></div>
+			<h3>Erros</h3>
+			<p>Quantidade de respostas erradas.</p>
+		</div>
+	</div>
+<% end %>
